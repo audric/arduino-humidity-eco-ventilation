@@ -28,6 +28,7 @@ void setup()
     lcd.setCursor(0,1);
     lcd.print("  ARCHIVIO 1.0  ");
     delay(2000);
+    // read eeprom value for humidity treshold
     state = SHOW_HUMIDITY;
 }
 
@@ -71,11 +72,18 @@ void transition(uint8_t trigger)
     switch (state)
     {
         case SHOW_HUMIDITY:
-            if ( trigger == KEYPAD_LEFT ) state = SHOW_HUMIDITY_THRESHOLD;
-            else if ( trigger == KEYPAD_SELECT ) state = SET_HUMIDITY_THRESHOLD;
+            if ( trigger == KEYPAD_SELECT )      state = SET_HUMIDITY_THRESHOLD;
+            else if ( trigger == KEYPAD_LEFT )   state = SHOW_HUMIDITY_THRESHOLD;
+            else if ( trigger == KEYPAD_RIGHT )  state = SHOW_HUMIDITY_THRESHOLD;
+            else if ( trigger == KEYPAD_UP )     state = SHOW_HUMIDITY_THRESHOLD;
+            else if ( trigger == KEYPAD_DOWN )   state = SHOW_HUMIDITY_THRESHOLD;
             break;
         case SHOW_HUMIDITY_THRESHOLD:
             if ( trigger == KEYPAD_SELECT )     state = SHOW_HUMIDITY;
+            else if ( trigger == KEYPAD_LEFT )  state = SHOW_HUMIDITY;
+            else if ( trigger == KEYPAD_RIGHT ) state = SHOW_HUMIDITY;
+            else if ( trigger == KEYPAD_UP )    state = SHOW_HUMIDITY;
+            else if ( trigger == KEYPAD_DOWN )  state = SHOW_HUMIDITY;
             else if ( trigger == TIME_OUT )     state = SHOW_HUMIDITY;
             break;
         case SET_HUMIDITY_THRESHOLD:
@@ -111,7 +119,7 @@ void showHumidityThreshold()
 
 void checkHumidity()
 {
-    // if ( H1 > H2 ) { .... };
+    // if (( Hi > He ) && ( Hi > Htreshold)) { activate_ventilation; }
 }
 
 
@@ -145,6 +153,7 @@ void setHumidityThreshold()
             lcd.print( tmpHumidityTreshold );
             lcd.print( '%' );
             humidityThreshold = tmpHumidityTreshold;
+            // to do write value in eeprom
             timeRef = millis();
         }
         else if ( button == KEYPAD_DOWN )
@@ -157,6 +166,7 @@ void setHumidityThreshold()
             lcd.print( tmpHumidityTreshold );
             lcd.print( '%' );
             humidityThreshold = tmpHumidityTreshold;
+            // to do write value in eeprom
             timeRef = millis();
         }
         else if ( button == KEYPAD_SELECT )
@@ -171,3 +181,4 @@ void setHumidityThreshold()
     if ( !timeOut ) transition(KEYPAD_SELECT);
     else transition(TIME_OUT);
 }
+
