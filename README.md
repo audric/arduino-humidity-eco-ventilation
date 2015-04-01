@@ -17,6 +17,11 @@ qui con i pulsanti "UP" e "DOWN" si imposta a scatti di 5 la soglia in valori pe
 
 Il valore è memorizzato nella EEPROM in modo da essere mantenuto anche in caso di mancanza di alimentazione.
 
+Se la lettura del valore delle sonde non avviene , i valori impossibili e negativi ritornati hanno questi significati:
+* -1 = "Checksum error" 
+* -2 = "Time out error" (sicuri che la sonda sia collegata?)
+* -3 = "Unknown error" 
+
 # Impostazione di massima del sistema
 * Il locale deve essere ermeticamente chiuso
 * Il sensore di umidità esterno va posto possibilmente in alto e nello stesso punto va installata una ventola con flusso da fuori a dentro. Dopo un periodo di osservazione di qualche mese, statisticamente il punto in alto scelto è sempre stato più secco di quello in basso.
