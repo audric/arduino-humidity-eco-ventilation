@@ -40,8 +40,18 @@ Se la lettura del valore delle sonde non avviene , i valori impossibili e negati
 * un modulo DC-DC 12-5 (per alimentare l'arduino)
 * scatola gewiss, cavi, silicone, etc
 
-
 ![schema di collegamento](https://github.com/audric/arduino-humidity-eco-ventilation/raw/master/schema.png)
+
+## Calcoli vari
+
+Il locale da deumidificare (l'archivio) è circa 3x3x3metri, cioè 27 metri cubi. La ventola utilizzata ha un flusso di 30,2 piedi cubici al minuto pari a 0,855169 metri cubi al minuto. Il totale ricambio d'aria si avrà quindi in 31,5 minuti.
+
+Ogni ventola consuma 0,19A a 12Vdc, quindi insieme circa 0,4A @12Vdc.
+
+L'arduino consuma circa 200mA @ 5Vdc, per la conversione DC-DC, facciamo finta che renda solo il 50%, quindi 0,4A @12Vdc.
+
+In totale siamo a 0,8A @12VDC. Un alimentatore da minimo 10W dovrebbe andar bene.
+
 
 # Dipendendenze
 Questo codice utilizza le librerie:
