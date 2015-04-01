@@ -1,7 +1,9 @@
-# arduino-humidity-eco-ventilation
-Controllo umidità e deumidificatore ecologico con arduino, 2 sensori DHT11 o DHT22, 2 relay, 2 ventole e un DF ROBOT LCD shield con pulsanti su pin analogico A0.
+# Sistema di deumidifcazione ecologica
 
-# Principio di funzionamento
+## Principio di funzionamento
+
+Il sistema di deumidifcazione funziona solo in climi dove l'umidità dell'aria relativa diurna è mediamente accettabile. L'aria esterna verrà utilizzata come il mezzo prosciugante di un ambiente chiuso.
+
 Data una soglia di umidità massima tollerata, si confronta l'umidità relativa istantanea ogni 3 secondi all'interno dell'ambiente (in questo caso un archivio cartaceo).
 
 Se l'umidità rilevata è maggiore di quella tollerata e se l'umidità misurata all'esterno è più bassa di quella interna (cioè l'aria fuori è più secca) allora si azionano le ventole per il ricambio d'aria pompando aria secca all'interno dall'alto e succhiando fuori l'aria umida dal basso.
@@ -22,10 +24,22 @@ Se la lettura del valore delle sonde non avviene , i valori impossibili e negati
 * -2 = "Time out error" (sicuri che la sonda sia collegata?)
 * -3 = "Unknown error" 
 
-# Impostazione di massima del sistema
+## Impostazione di massima del sistema
 * Il locale deve essere ermeticamente chiuso
 * Il sensore di umidità esterno va posto possibilmente in alto e nello stesso punto va installata una ventola con flusso da fuori a dentro. Dopo un periodo di osservazione di qualche mese, statisticamente il punto in alto scelto è sempre stato più secco di quello in basso.
 * Il sensore di umidità interno va posto possibilmente in basso e nello stesso punto va installata una ventola con flusso da dentro a fuori.
+
+## Componenti
+
+* un arduino (testato duemilanove)
+* 2 sensori DHT11 o DHT22 (configurare nel codice il tipo di sensore)
+* 2 relay (usati 2 moduli della keyes, già compresi di resistenza, led e diodo di protezione)
+* 2 ventole (recuperate 2 CF12825MS)
+* un DF ROBOT LCD shield (con pulsanti su pin analogico A0)
+* alimentatore 12Vcc (sia per alimentare le ventole tramite i relay, sia per alimentare il modulo DC-DC che alimeta l'arduino)
+* un modulo DC-DC 12-5 (per alimentare l'arduino)
+* scatola gewiss, cavi, silicone, etc
+
 
 ![schema di collegamento](https://github.com/audric/arduino-humidity-eco-ventilation/raw/master/schema.png)
 
