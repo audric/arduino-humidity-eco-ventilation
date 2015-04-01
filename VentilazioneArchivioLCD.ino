@@ -14,6 +14,9 @@
 #define DHTTYPE DHT11
 //#define DHTTYPE DHT22
 
+#define LCDbacklight() pinMode( 10, INPUT) // turn on backlight
+#define LCDnoBacklight() pinMode( 10, OUTPUT) // turn off backlight
+
 LCDKeypad lcd;
 dht DHT;
 
@@ -51,6 +54,8 @@ boolean Vent = false;
 */
 void setup()
 {
+    digitalWrite(10,LOW);
+    //LCDnoBacklight(); // turn off the backlight
     pinMode( DHToutsidePin, INPUT);
     pinMode( DHTinsidePin,  INPUT);
     pinMode( outsideVentRelayPin, OUTPUT);
@@ -68,9 +73,9 @@ void setup()
     lcd.begin(16, 2);
     lcd.setCursor(0,0);
     //         1234567890123456
-    lcd.print("  VENTILAZIONE  ");
+    lcd.print("Eco Dehumifier  ");
     lcd.setCursor(0,1);
-    lcd.print("  ARCHIVIO 1.0  ");
+    lcd.print("      1.0       ");
     delay(2000);
     // read eeprom value for humidity treshold
     state = SHOW_HUMIDITY;
@@ -119,6 +124,13 @@ void loop()
         }
     }
     checkHumidity();
+    if ( Vent ) {
+      digitalWrite( outsideVentRelayPin, HIGH );
+      digitalWrite( insideVentRelayPin, HIGH );
+    } else {
+      digitalWrite( outsideVentRelayPin, LOW );
+      digitalWrite( insideVentRelayPin, LOW );
+    }
 }
 
 /*
@@ -225,10 +237,11 @@ void checkHumidity()
     // if (( Hi > He ) && ( Hi > Htreshold)) { activate_ventilation; }
     if ( HIn > humidityThreshold ) {
       OverThreshold = true;
-      if ( HIn > HOut )
-        Vent = true;
-      else
+      if ( HIn > HOut ) {
+       Vent = true;
+      } else {
          Vent = false;
+      }
     } else {
        OverThreshold = false;
        Vent = false;
@@ -249,15 +262,16 @@ void showHumidity()
 {
     lcd.clear();
     //         1234567890123456
-    lcd.print( "V=Hi>He e Hi>" );
-    lcd.print( humidityThreshold );
-    lcd.print( "%" );
+    lcd.print( "Eco Dehumifier " );
     lcd.setCursor(0,1);
     lcd.print( "Hi ");
     lcd.print( (int)HIn );
     lcd.print( "% He " );
     lcd.print( (int)HOut );
     lcd.print( "%" );
+
+    lcd.setCursor(15,1);
+    if ( Vent ) lcd.print( "*" ); else lcd.print( "." );
 }
 
 /*
