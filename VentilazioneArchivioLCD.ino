@@ -73,10 +73,10 @@ void setup()
     lcd.begin(16, 2);
     lcd.setCursor(0,0);
     //         1234567890123456
-    lcd.print("Eco Dehumifier  ");
+    lcd.print(" ECO DEHUMIFIER ");
     lcd.setCursor(0,1);
-    lcd.print("      1.0       ");
-    delay(2000);
+    lcd.print("     1.0.0      ");
+    delay(1500);
     // read eeprom value for humidity treshold
     state = SHOW_HUMIDITY;
 }
@@ -261,8 +261,8 @@ void checkHumidity()
 void showHumidity()
 {
     lcd.clear();
-    //         1234567890123456
-    lcd.print( "Eco Dehumifier " );
+    //          1234567890123456
+    lcd.print( " ECO DEHUMIFIER " );
     lcd.setCursor(0,1);
     lcd.print( "Hi ");
     lcd.print( (int)HIn );
@@ -291,7 +291,7 @@ void showHumidityTemp1()
     lcd.print( "ESTERNO" );
     lcd.setCursor(0,1);
     lcd.print( "He ");
-    lcd.print( HOut );
+    lcd.print( (int)HOut );
     lcd.print( "% Te" );
     lcd.print( (int)TOut );
     lcd.print( "C" );
@@ -314,7 +314,7 @@ void showHumidityTemp2()
     lcd.print( "INTERNO" );
     lcd.setCursor(0,1);
     lcd.print( "Hi ");
-    lcd.print( HIn );
+    lcd.print( (int)HIn );
     lcd.print( "% Ti" );
     lcd.print( (int)TIn );
     lcd.print( "C" );
@@ -334,7 +334,7 @@ void showHumidityThreshold()
 {
     lcd.clear();
     //         1234567890123456
-    lcd.print("Soglia umidita'");
+    lcd.print("SOGLIA UMIDITA' ");
     lcd.setCursor(0,1);
     lcd.print( "interna: " );
     lcd.print( humidityThreshold );
