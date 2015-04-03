@@ -226,12 +226,14 @@ dht GetHT(int onPIN)
 void checkHumidity()
 {
     // find out a way not to read values to soon than 2 sec apart
-    HIn = GetHT(DHTinsidePin).humidity;
-    TIn = GetHT(DHTinsidePin).temperature;
+    dht dhtTemp = GetHT(DHTinsidePin);
+    HIn = dhtTemp.humidity;
+    TIn = dhtTemp.temperature;
     (TIn < -10) ? TIn = 0 : TIn = TIn;
     
-    HOut = GetHT(DHToutsidePin).humidity;
-    TOut = GetHT(DHToutsidePin).temperature;
+    dhtTemp = GetHT(DHToutsidePin);
+    HOut = dhtTemp.humidity;
+    TOut = dhtTemp.temperature;
     (TOut < -10) ? TOut = 0 : TOut = TOut;
 
     // if (( Hi > He ) && ( Hi > Htreshold)) { activate_ventilation; }
@@ -291,9 +293,9 @@ void showHumidityTemp1()
     lcd.print( "ESTERNO" );
     lcd.setCursor(0,1);
     lcd.print( "He ");
-    lcd.print( (int)HOut );
+    lcd.print( HOut,1 );
     lcd.print( "% Te" );
-    lcd.print( (int)TOut );
+    lcd.print( TOut,1 );
     lcd.print( "C" );
 }
 
@@ -314,9 +316,9 @@ void showHumidityTemp2()
     lcd.print( "INTERNO" );
     lcd.setCursor(0,1);
     lcd.print( "Hi ");
-    lcd.print( (int)HIn );
+    lcd.print( HIn,1 );
     lcd.print( "% Ti" );
-    lcd.print( (int)TIn );
+    lcd.print( TIn,1 );
     lcd.print( "C" );
 }
 
