@@ -2,7 +2,7 @@
 
 ## Principio di funzionamento
 
-Il sistema di deumidifcazione funziona solo in climi dove l'umidità dell'aria relativa diurna è mediamente accettabile. L'aria esterna verrà utilizzata come il mezzo prosciugante di un ambiente chiuso.
+Il sistema di deumidifcazione funziona solo in climi dove l'umidità dell'aria relativa diurna è mediamente minore di quella rilevata all'interno del locale da sanare. L'aria esterna verrà utilizzata come il mezzo prosciugante di un ambiente chiuso.
 
 Data una soglia di umidità massima tollerata, si confronta l'umidità relativa istantanea ogni 3 secondi all'interno dell'ambiente (in questo caso un archivio cartaceo).
 
