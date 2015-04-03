@@ -42,6 +42,28 @@ float TOut =  0;
 boolean OverThreshold = false;
 boolean Vent = false;
 
+// http://omerk.github.io/lcdchargen/
+byte customCharArrowUp[8] = {
+	0b00000,
+	0b00100,
+	0b01110,
+	0b11111,
+	0b00000,
+	0b00000,
+	0b11111,
+	0b10001
+};
+byte customCharArrowDown[8] = {
+	0b10001,
+	0b11111,
+	0b00000,
+	0b00000,
+	0b11111,
+	0b01110,
+	0b00100,
+	0b00000
+};
+
 /*
            _               
           | |              
@@ -60,6 +82,10 @@ void setup()
     pinMode( DHTinsidePin,  INPUT);
     pinMode( outsideVentRelayPin, OUTPUT);
     pinMode( insideVentRelayPin,  OUTPUT);
+    
+    lcd.createChar(0, customCharArrowUp);
+    lcd.createChar(1, customCharArrowDown);
+    
     
     // recover humidityThreshold value from eeprom after poweroff
     humidityThreshold = EEPROM.read(0);
@@ -264,7 +290,7 @@ void showHumidity()
 {
     lcd.clear();
     //          1234567890123456
-    lcd.print( " ECO DEHUMIFIER " );
+    lcd.print( "ECO DEHUMIFIER  " );
     lcd.setCursor(0,1);
     lcd.print( "Hi ");
     lcd.print( (int)HIn );
@@ -272,7 +298,12 @@ void showHumidity()
     lcd.print( (int)HOut );
     lcd.print( "%" );
 
+    lcd.setCursor(15,0);
+    lcd.write((uint8_t)0);
     lcd.setCursor(15,1);
+    lcd.write((uint8_t)1);
+
+    lcd.setCursor(14,1);
     if ( Vent ) lcd.print( "*" ); else lcd.print( "." );
 }
 
@@ -293,10 +324,15 @@ void showHumidityTemp1()
     lcd.print( "ESTERNO" );
     lcd.setCursor(0,1);
     lcd.print( "He ");
-    lcd.print( HOut,1 );
+    lcd.print( (int)HOut );
     lcd.print( "% Te" );
-    lcd.print( TOut,1 );
+    lcd.print( (int)TOut );
     lcd.print( "C" );
+
+    lcd.setCursor(15,0);
+    lcd.write((uint8_t)0);
+    lcd.setCursor(15,1);
+    lcd.write((uint8_t)1);
 }
 
 /*
@@ -316,10 +352,15 @@ void showHumidityTemp2()
     lcd.print( "INTERNO" );
     lcd.setCursor(0,1);
     lcd.print( "Hi ");
-    lcd.print( HIn,1 );
+    lcd.print( (int)HIn );
     lcd.print( "% Ti" );
-    lcd.print( TIn,1 );
+    lcd.print( (int)TIn );
     lcd.print( "C" );
+
+    lcd.setCursor(15,0);
+    lcd.write((uint8_t)0);
+    lcd.setCursor(15,1);
+    lcd.write((uint8_t)1);
 }
 
 /*
@@ -341,6 +382,11 @@ void showHumidityThreshold()
     lcd.print( "interna: " );
     lcd.print( humidityThreshold );
     lcd.print( '%' );
+
+    lcd.setCursor(15,0);
+    lcd.write((uint8_t)0);
+    lcd.setCursor(15,1);
+    lcd.write((uint8_t)1);
 //    transition(TIME_OUT);
 }
 
