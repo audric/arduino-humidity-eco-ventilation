@@ -17,6 +17,8 @@
 #define LCDbacklight() pinMode( 10, INPUT) // turn on backlight
 #define LCDnoBacklight() pinMode( 10, OUTPUT) // turn off backlight
 
+#define pinBuzzer 11
+
 LCDKeypad lcd;
 dht DHT;
 
@@ -82,7 +84,8 @@ void setup()
     pinMode( DHTinsidePin,  INPUT);
     pinMode( outsideVentRelayPin, OUTPUT);
     pinMode( insideVentRelayPin,  OUTPUT);
-    
+    pinMode( pinBuzzer, OUTPUT);
+    beep();    beep();    beep();    
     lcd.createChar(0, customCharArrowUp);
     lcd.createChar(1, customCharArrowDown);
     
@@ -146,6 +149,7 @@ void loop()
         {
             while ( lcd.button() != KEYPAD_NONE ) ;
             transition(button);
+            beep();
             break;
         }
     }
@@ -461,3 +465,9 @@ void setHumidityThreshold()
     }
 }
 
+void beep() {
+  digitalWrite( pinBuzzer, HIGH);
+  delay( 100 );
+  digitalWrite( pinBuzzer, LOW);
+  delay( 50 );
+}
