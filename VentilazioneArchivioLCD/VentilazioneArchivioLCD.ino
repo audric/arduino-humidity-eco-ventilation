@@ -266,7 +266,7 @@ void checkHumidity()
     TOut = dhtTemp.temperature;
     (TOut < -10) ? TOut = 0 : TOut = TOut;
 
-    // if (( Hi > He ) && ( Hi > Htreshold)) { activate_ventilation; }
+    // if (( Hi > Htreshold) && ( Hi > He )) { activate_ventilation; }
     if ( HIn > humidityThreshold ) {
       OverThreshold = true;
       if ( HIn > HOut ) {
@@ -325,11 +325,11 @@ void showHumidityTemp1()
 {
     lcd.clear();
     //         1234567890123456
-    lcd.print( "ESTERNO" );
+    lcd.print( "EXTERNAL" );
     lcd.setCursor(0,1);
     lcd.print( "He ");
     lcd.print( (int)HOut );
-    lcd.print( "% Te" );
+    lcd.print( "% Te " );
     lcd.print( (int)TOut );
     lcd.print( "C" );
 
@@ -353,11 +353,11 @@ void showHumidityTemp2()
 {
     lcd.clear();
     //         1234567890123456
-    lcd.print( "INTERNO" );
+    lcd.print( "INTERNAL" );
     lcd.setCursor(0,1);
     lcd.print( "Hi ");
     lcd.print( (int)HIn );
-    lcd.print( "% Ti" );
+    lcd.print( "% Ti " );
     lcd.print( (int)TIn );
     lcd.print( "C" );
 
@@ -381,9 +381,9 @@ void showHumidityThreshold()
 {
     lcd.clear();
     //         1234567890123456
-    lcd.print("SOGLIA UMIDITA' ");
+    lcd.print("HUMIDITY THRES..");
     lcd.setCursor(0,1);
-    lcd.print( "interna: " );
+    lcd.print( "SET IT TO: " );
     lcd.print( humidityThreshold );
     lcd.print( '%' );
 
@@ -410,13 +410,13 @@ void setHumidityThreshold()
     
     lcd.clear();
     //         1234567890123456
-    lcd.print("Impostazione %");
+    lcd.print("Humidity % set");
 
     tmpHumidityTreshold = humidityThreshold;
     timeRef = millis();
     lcd.setCursor(0,1);
     //         1234567890123456
-    lcd.print("Umidita':  ");
+    lcd.print("thres. is: ");
     lcd.print( humidityThreshold );
     lcd.print("%");
     
