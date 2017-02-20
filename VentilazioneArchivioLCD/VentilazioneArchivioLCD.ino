@@ -28,7 +28,8 @@ enum states
     SHOW_HUMIDITY_AND_TEMP1,
     SHOW_HUMIDITY_AND_TEMP2,
     SHOW_HUMIDITY_THRESHOLD,
-    SET_HUMIDITY_THRESHOLD
+    SET_HUMIDITY_THRESHOLD,
+    SHOW_ERROR_MESSAGE
 };
 
 states state;
@@ -104,10 +105,14 @@ void setup()
     //         1234567890123456
     lcd.print(" ECO DEHUMIFIER ");
     lcd.setCursor(0,1);
-    lcd.print("     1.0.0      ");
+    lcd.print("     1.0.1      ");
     delay(1500);
     // read eeprom value for humidity treshold
-    state = SHOW_HUMIDITY;
+    if (TIn >= 0)
+      state = SHOW_HUMIDITY;
+    else
+      state = SHOW_ERROR_MESSAGE;
+
 }
 
 /*
@@ -141,6 +146,9 @@ void loop()
             break;
         case SET_HUMIDITY_THRESHOLD:
             setHumidityThreshold();
+            break;
+        case SHOW_ERROR_MESSAGE:
+            showErrorMessage();
     }
 
     while ( (unsigned long)(millis() - timeRef) < 2970 )
@@ -202,6 +210,10 @@ void transition(uint8_t trigger)
             if ( trigger == KEYPAD_SELECT ) state = SHOW_HUMIDITY;
             else if ( trigger == TIME_OUT ) state = SHOW_HUMIDITY;
             break;
+//        case SHOW_ERROR_MESSAGE:
+//            if ( trigger == KEYPAD_SELECT ) state = SHOW_HUMIDITY;
+//            else if ( trigger == TIME_OUT ) state = SHOW_HUMIDITY;
+//            break;
     }
 }
 
@@ -464,6 +476,16 @@ void setHumidityThreshold()
       transition(TIME_OUT);
     }
 }
+
+void showErrorMessage()
+{
+    lcd.clear();
+    //          1234567890123456
+    lcd.print( "ERROR:          " );
+    lcd.setCursor(0,1);
+    lcd.print( "MISSING SENSORS ");
+}
+
 
 void beep() {
   digitalWrite( pinBuzzer, HIGH);
